@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Details Form - IFIC Bank PLC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 120px; /* লোগোর আকার সেট করতে এখানে পরিবর্তন করতে পারেন */
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .header p {
+            margin: 2px 0;
+            color: #555;
+        }
+        .header .sub-title {
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+            font-weight: bold;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .header .sub-title {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container" id="formContent">
+    <div class="header">
+        <!-- লোগো যুক্ত করা হয়েছে -->
+        <img src="logo.png" alt="IFIC Bank Logo">
+        <h1>IFIC BANK PLC </h1>
+        <p>Sylhet Station Road Uposhakha</p>
+        <p class="sub-title">One Click Loan Documents</p>
+        <h3>Personal Details</h3>
+    </div>
+    <form id="personalForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" name="contact" required>
+        </div>
+        <div class="form-group">
+            <label for="fatherName">Father's Name:</label>
+            <input type="text" id="fatherName" name="fatherName" required>
+        </div>
+        <div class="form-group">
+            <label for="motherName">Mother's Name:</label>
+            <input type="text" id="motherName" name="motherName" required>
+        </div>
+        <div class="form-group">
+            <label for="presentAddress">Present Address:</label>
+            <input type="text" id="presentAddress" name="presentAddress" required>
+        </div>
+        <div class="form-group">
+            <label for="permanentAddress">Permanent Address:</label>
+            <input type="text" id="permanentAddress" name="permanentAddress" required>
+        </div>
+        <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+        <button type="button" class="submit-btn" onclick="downloadPDF()">Download as PDF</button>
+        <button type="button" class="submit-btn" onclick="downloadImage()" style="background-color: #2196F3; margin-top: 10px;">Download as Image</button>
+    </form>
+</div>
+
+<!-- html2pdf.js লাইব্রেরি যুক্ত করুন -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<!-- html2canvas লাইব্রেরি যুক্ত করুন -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+    function downloadPDF() {
+        const element = document.getElementById("formContent");
+        const opt = {
+            margin:       0.5,
+            filename:     'Personal_Details.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().from(element).set(opt).save();
+    }
+
+    function downloadImage() {
+        const element = document.getElementById("formContent");
+        html2canvas(element).then(canvas => {
+            const link = document.createElement("a");
+            link.href = canvas.toDataURL("image/png");
+            link.download = "Personal_Details.png";
+            link.click();
+        });
+    }
+</script>
+
+</body>
+</html>
